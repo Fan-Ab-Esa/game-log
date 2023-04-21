@@ -3,7 +3,7 @@ import './App.css'
 import GameCard from './components/GameCard'
 import MenuBar from './components/MenuBar'
 import Nav from './components/Nav'
-
+import array from './servises/array'
 function App() {
 const arr=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 const [lightDark,setLightDark]=useState(false)
@@ -14,8 +14,8 @@ function handelTheme(){
   return (
     <div className={lightDark?'text-bg-dark':'text-bg-light'}>
       <Nav onThemeChange={handelTheme}/>
-      <div className='d-flex  flex-row'>
-        <div  className='border border-danger h-90'>
+      <div className='d-flex  flex-row align-items-start'>
+        <div  className='border border-danger d-none d-sm-block'>
         <MenuBar/>
         </div>
         <div className='vstack'>
@@ -37,7 +37,7 @@ function handelTheme(){
             </div>
             <div className='d-flex flex-wrap border border-dark p-2'>
               {
-                arr.map(i=><span key={i}>< GameCard/></span>)
+                array.map(i=><span key={i.id}>< GameCard img={i.img}/></span>)
               }
             </div>
         </div>
