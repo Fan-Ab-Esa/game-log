@@ -1,11 +1,38 @@
-import { useState } from 'react'
+import { useState ,useEffect} from 'react'
 import './App.css'
 import GameCard from './components/GameCard'
 import MenuBar from './components/MenuBar'
 import Nav from './components/Nav'
 import array from './servises/array'
+import GameServices from './servises/game-services'
+
+interface GameResponse{
+  id:number,
+  name:string,
+  img:string
+}
 function App() {
+  const [backImg,setBackImg]=useState<GameResponse[]>([])
 const arr=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+useEffect(()=>{
+  GameServices
+  .getAllGames()
+  .then((res)=>{
+             // console.log(res.data.results);
+              const tempArr=res.data.results;
+              console.log(tempArr)
+              const arrTwo=tempArr.map((i)=>{
+                return ({id:i.id,name:i.name,img:i.background_image})
+              })
+              console.log(arrTwo)
+              setBackImg([...arrTwo])
+            })
+  .catch((err)=>console.log(err))
+
+},[])
+
+
+
 const [lightDark,setLightDark]=useState(false)
 function handelTheme(){
   console.log('hello world');
@@ -37,7 +64,9 @@ function handelTheme(){
             </div>
             <div className='d-flex flex-wrap border border-dark p-2'>
               {
-                array.map(i=><span key={i.id}>< GameCard img={i.img}/></span>)
+                backImg.map(i=><span key={i.id}>< GameCard name={i.name} img={i.img}/></span>)
+                //array.map(i=><span key={i.id}>< GameCard img={i.img}/></span>)
+                
               }
             </div>
         </div>
