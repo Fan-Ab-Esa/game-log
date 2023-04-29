@@ -9,11 +9,11 @@ import GameServices from './servises/game-services'
 interface GameResponse{
   id:number,
   name:string,
-  img:string
+  background_image:string,
+  rating:string
 }
 function App() {
   const [backImg,setBackImg]=useState<GameResponse[]>([])
-const arr=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 useEffect(()=>{
   GameServices
   .getAllGames()
@@ -21,8 +21,8 @@ useEffect(()=>{
              // console.log(res.data.results);
               const tempArr=res.data.results;
               console.log(tempArr)
-              const arrTwo=tempArr.map((i)=>{
-                return ({id:i.id,name:i.name,img:i.background_image})
+              const arrTwo=tempArr.map((i:GameResponse)=>{
+                return ({id:i.id,name:i.name,background_image:i.background_image,rating:i.rating})
               })
               console.log(arrTwo)
               setBackImg([...arrTwo])
@@ -42,7 +42,7 @@ function handelTheme(){
     <div className={lightDark?'text-bg-dark':'text-bg-light'}>
       <Nav onThemeChange={handelTheme}/>
       <div className='d-flex  flex-row align-items-start'>
-        <div  className='border border-danger d-none d-sm-block'>
+        <div  className='border border-danger  d-sm-block'>
         <MenuBar/>
         </div>
         <div className='vstack'>
@@ -62,11 +62,13 @@ function handelTheme(){
                 <option value="">Popularity</option>
               </select>
             </div>
-            <div className='d-flex flex-wrap border border-dark p-2'>
+     
+            <div className='row    row-cols-1 row-cols-sm-2 row-cols-md-3 
+                              row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 border-dark p-1'>
               {
-                backImg.map(i=><span key={i.id}>< GameCard name={i.name} img={i.img}/></span>)
-                //array.map(i=><span key={i.id}>< GameCard img={i.img}/></span>)
-                
+                backImg.map(i=><div className=' p-1'
+                                    key={i.id}>< GameCard  name={i.name} img={i.background_image} rating={i.rating}/>
+                              </div>)  
               }
             </div>
         </div>
