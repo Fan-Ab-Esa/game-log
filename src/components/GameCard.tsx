@@ -1,3 +1,4 @@
+import {BsStar} from 'react-icons/bs'
 interface GameCardProp{
   name:string,
   img:string,
@@ -9,7 +10,7 @@ const GameCard = ({name,img,rating}:GameCardProp) => {
       <img style={{width:'auto',height:'150px'}} src={img} alt="" />
       <div className="card-body">
         <div style={{maxWidth:'150px'}} className="card-title">{name}</div>
-        <div className="card-subtitle">{rating}*</div>
+        <div className="card-subtitle">{rating} <BsStar /></div>
       </div>
     </div>
   )

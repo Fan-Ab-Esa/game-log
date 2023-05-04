@@ -1,7 +1,10 @@
 import apiClient from "./api-client";
 class GameServise{
      getAllGames(){
-        return apiClient.get('/games')
+        const controller=new AbortController()
+       const request= apiClient.get('/games',{signal:controller.signal})
+       const cancel=()=>{controller.abort()};
+       return {request,cancel}
     }
 }
 export default new GameServise()
